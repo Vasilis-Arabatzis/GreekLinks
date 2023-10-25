@@ -9,15 +9,20 @@ import {
   Image,
   TouchableOpacity,
   Pressable,
+  Alert,
 } from "react-native";
 
 import { loginP } from './../app/dbtrial';
+
 
 
 export default function modalScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [phone, setPhone] = useState("");
 
   const styles = StyleSheet.create({
     container: {
@@ -59,22 +64,34 @@ export default function modalScreen() {
     },
   });
 
- const element = loginP.users.map((user) =>(user.mail));
- const element2 = loginP.users.map((user) =>(user.Upassword));
- const checkLogin=() =>{
-   for (let i= 0; i < loginP.users.length; i++) {
-     if( email === element[i] && password === element2[i]){
-       console.log("Welcome to GreekLinks")
-     }else{
-      console.log("Sorry ")
-     }
 
-    
-   }
- }
 
- const forgotPassword=() =>{
- 
+ const Register=() =>{
+  if(password !== "" && confirmPassword !== "" && name !== "" && surname !== "" && phone !== "" && email !== "" ){
+    if(password === confirmPassword){
+       console.log(email)
+    }else{
+      Alert.alert(
+        'Δεν εχείς βάλει σωστά τον κωδικό σου',
+        '',
+        [
+          {
+            text: 'ΟΚ',
+          },
+        ],
+      ) 
+    }
+  }else{
+    Alert.alert(
+      'Ξέχασες κάποιο πλαίσιο να συμπληρώσεις',
+      '',
+      [
+        {
+          text: 'ΟΚ',
+        },
+      ],
+    ) 
+  }
  }
 
   return (
@@ -88,6 +105,7 @@ export default function modalScreen() {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
+          keyboardType="email-address"
           placeholder="Email"
           placeholderTextColor="#f5beac"
           onChangeText={(email) => setEmail(email)}
@@ -108,7 +126,7 @@ export default function modalScreen() {
           placeholder="Confirm Password"
           placeholderTextColor="#f5beac"
           secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
+          onChangeText={(password) => setConfirmPassword(password)}
         /> 
       </View> 
       <View style={styles.inputView}>
@@ -116,7 +134,7 @@ export default function modalScreen() {
           style={styles.TextInput}
           placeholder="Name"
           placeholderTextColor="#f5beac"
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={(name) => setName(name)}
         /> 
       </View> 
       <View style={styles.inputView}>
@@ -124,19 +142,21 @@ export default function modalScreen() {
           style={styles.TextInput}
           placeholder="Surname"
           placeholderTextColor="#f5beac"
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={(surname) => setSurname(surname)}
         /> 
       </View> 
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
+          keyboardType="phone-pad"
           placeholder="Phone"
           placeholderTextColor="#f5beac"
-          onChangeText={(email) => setEmail(email)}
+          maxLength={10}
+          onChangeText={(phone) => setPhone(phone)}
         /> 
       </View>
-      <TouchableOpacity  onPress={() => checkLogin()} style={styles.RegisterBtn}>
-        <Text style= {{color:"#f5beac"}}>LOGIN</Text> 
+      <TouchableOpacity  onPress={() => Register()} style={styles.RegisterBtn}>
+        <Text style= {{color:"#f5beac"}}>REGISTER</Text> 
       </TouchableOpacity> 
       
     </View> 
